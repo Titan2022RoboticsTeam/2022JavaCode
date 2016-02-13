@@ -2,9 +2,14 @@
 package org.usfirst.frc.team2022.robot;
 
 import org.usfirst.frc.team2022.robot.commands.DriveCommand;
+import org.usfirst.frc.team2022.robot.commands.autonomous.groups.DefaultAutonomousCommandGroup;
+import org.usfirst.frc.team2022.robot.commands.autonomous.groups.LowBarHighGoalAutonomousCommandGroup;
 import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,12 +35,19 @@ public class Robot extends IterativeRobot {
 	//Create References to commands
 	public DriveCommand driveCommand;
 	
+	SendableChooser autoChooser;
+	
+	CommandGroup autonomousCommand;
+	
 	
     public void robotInit() {
     	//Instantiate OI
     	oi = new OI();
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
+    	autoChooser.addDefault("Default Command", new DefaultAutonomousCommandGroup());
+    	autoChooser.addObject("Low Bar High Goal Command", new LowBarHighGoalAutonomousCommandGroup());
+    	SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
     }
     
 	/**
@@ -48,7 +60,8 @@ public class Robot extends IterativeRobot {
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
     public void autonomousInit() {
-    	
+    	autonomousCommand = (CommandGroup) autoChooser.getSelected();
+    	autonomousCommand.start();
     }
 
 
