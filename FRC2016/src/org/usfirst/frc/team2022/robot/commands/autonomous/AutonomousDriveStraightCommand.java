@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2022.robot.commands;
+package org.usfirst.frc.team2022.robot.commands.autonomous;
 
 import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
 
@@ -42,17 +42,12 @@ public class AutonomousDriveStraightCommand extends Command {
     	driveSubsystem.enableRightPIDController(distance);
     	
     	// Sets the speed of the robot based on the PIDs
-    	while(running){
+		while(driveSubsystem.rightPIDOnTarget() == false && driveSubsystem.leftPIDOnTarget() == false){
 			driveSubsystem.setRightSpeed(driveSubsystem.getRightPIDOutput());
 			driveSubsystem.setLeftSpeed(driveSubsystem.getLeftPIDOuput());
-    	
-	    	if(driveSubsystem.getRightEncoderDistance() > distance - 0.5 && driveSubsystem.getRightEncoderDistance() < distance + 0.5){
-				if(driveSubsystem.getLeftEncoderDistance() > distance - 0.5 && driveSubsystem.getLeftEncoderDistance() < distance + 0.5){
-					running = false;
-					System.out.println(running);
-				}
-			}
     	}
+		running = false;
+
     	
     	// Stops the robot
     	long time = System.currentTimeMillis();

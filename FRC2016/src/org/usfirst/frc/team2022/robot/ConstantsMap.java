@@ -17,4 +17,8 @@ public class ConstantsMap {
 	public static double dC = 0.2;
 	public static double kC = 0.5;
 	
+	//Robot Dimensions
+	public static final double robotWidth = 22;
+
+	
 }
