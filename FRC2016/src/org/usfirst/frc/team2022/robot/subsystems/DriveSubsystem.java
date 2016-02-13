@@ -1,8 +1,10 @@
 package org.usfirst.frc.team2022.robot.subsystems;
 
+import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -17,18 +19,44 @@ public class DriveSubsystem extends Subsystem {
 	// Creates TalonSR motor controller objects for
 	// the left and right motor controllers.
 	private TalonSRX left, right;
-	private boolean inverted;
+	private boolean inverted = false;
+	
+	//Encoders
 	private Encoder leftEncoder, rightEncoder;
+	
+	//PID Controllers- A loop that controllers motor speed 
+	public PIDController rightController;
+	public PIDOutputRight pidOutputRight;
+	
+	public PIDController leftController;
+	public PIDOutputLeft pidOutputLeft;
 	
 	// Constructor initializes these variables.
 	public DriveSubsystem() {
+		//Instantiate motors
+		left = new TalonSRX(RobotMap.leftDrivePort);
+		right = new TalonSRX(RobotMap.rightDrivePort);		
+		//Instantiate Encoders
+		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, false);
+		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
 		
-		this.left = new TalonSRX(RobotMap.leftDrivePort);
-		this.right = new TalonSRX(RobotMap.rightDrivePort);
-		this.inverted = false;
-		this.leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, false);
-		this.rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
+		//Set Encoder distanceFromTower per pulse
+		rightEncoder.setDistancePerPulse(ConstantsMap.driveEncoderDistPerTick);
+		leftEncoder.setDistancePerPulse(ConstantsMap.driveEncoderDistPerTick);
 		
+		//Instantiate PID controllers and output objects
+		pidOutputRight = new PIDOutputRight();
+		rightController = new PIDController(ConstantsMap.pC, ConstantsMap.iC, ConstantsMap.dC, ConstantsMap.kC, rightEncoder, pidOutputRight);
+
+		pidOutputLeft = new PIDOutputLeft();
+		leftController = new PIDController(ConstantsMap.pC, ConstantsMap.iC, ConstantsMap.dC, ConstantsMap.kC, leftEncoder, pidOutputLeft);
+		
+		//Set Ouput Range for pid outputs
+		rightController.setOutputRange(-1, 1);
+		leftController.setOutputRange(-1,1);
+		
+		rightController.setAbsoluteTolerance(0.5);
+		leftController.setAbsoluteTolerance(0.5);
 	}
 	
 	// Setter methods for each side.
@@ -57,17 +85,67 @@ public class DriveSubsystem extends Subsystem {
 		
 	}
 	
-	// Encoder getters.
-	public double getLeftEncoderDistance() {
-		
-		return leftEncoder.getDistance();
-		
+	//Get Encoder Distances
+	public double getRightEncoderDistance(){
+		return rightEncoder.getDistance();
 	}
 	
-	public double getRightEncoderDistance() {
-		
-		return rightEncoder.getDistance();
-		
+	public double getLeftEncoderDistance(){
+		return leftEncoder.getDistance();
+	}
+	//Get raw encoder counts
+	public int getLeftEncoderRawValue(){
+		return leftEncoder.get();
+	}
+	
+	public int getRightEncoderRawValue(){
+		return rightEncoder.get();
+	}
+	//Get Encoder Rates
+	public double getRightEncoderRate(){
+		return rightEncoder.getRate();
+	}
+	
+	public double getLeftEncoderRate(){
+		return leftEncoder.getRate();
+	}
+	
+	//reset encoders
+	public void resetEncoders(){
+		rightEncoder.reset();
+		leftEncoder.reset();
+	}
+	
+	//PID Methods
+	public void enableRightPIDController(double distance){
+		rightController.setSetpoint(distance);
+		rightController.enable();
+	}
+	public void disablePIDControllers(){
+		rightController.disable();
+		leftController.disable();
+	}
+	
+	public void enableLeftPIDController(double distance){
+		leftController.setSetpoint(distance);
+		leftController.enable();
+	}
+	
+	public double getRightPIDOutput(){
+		return pidOutputRight.getOutput();
+	}
+	
+	public double getLeftPIDOuput(){
+		return pidOutputLeft.getOutput();
+	}
+
+	//Is the robot within the absolute tolerance of the target distance
+	public boolean rightPIDOnTarget(){
+		return rightController.onTarget();
+	}
+	
+	public boolean leftPIDOnTarget(){
+		return leftController.onTarget();
 	}
 	
 	// Setter and Getter for inverted.
@@ -87,7 +165,7 @@ public class DriveSubsystem extends Subsystem {
 		
 		this.left.set(0);
 		this.right.set(0);
-		
+
 	}
 
     public void initDefaultCommand() {
