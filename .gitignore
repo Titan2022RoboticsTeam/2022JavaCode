@@ -1,10 +1,10 @@
+/bin/
 *.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -23,8 +23,11 @@ local.properties
 .settings/
 .loadpath
 
+
 # Eclipse Core
 .project
+*.log
+*.snap
 
 # External tool builders
 .externalToolBuilders/
@@ -61,9 +64,5 @@ local.properties
 
 # Code Recommenders
 .recommenders/
-*.log
-*.log
-.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
-*.xmi
-.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.syncinfo.snap
 *.snap
+*.log
