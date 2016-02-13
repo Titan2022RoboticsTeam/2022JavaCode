@@ -61,3 +61,8 @@ local.properties
 
 # Code Recommenders
 .recommenders/
+*.prefs
+*.log
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+*.prefs
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
