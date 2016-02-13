@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class AutonomousDriveStraightCommand extends Command {
+public class DriveStraightAutonomousCommand extends Command {
 	
 	// names DriveSubsystem object
 	DriveSubsystem driveSubsystem;
@@ -17,7 +17,7 @@ public class AutonomousDriveStraightCommand extends Command {
 	boolean running = true;
 	private double distance;
 
-    public AutonomousDriveStraightCommand(double distance) {
+    public DriveStraightAutonomousCommand(double distance) {
     	// Initializes driveSubsystem
     	driveSubsystem = new DriveSubsystem();
         // Use requires() here to declare subsystem dependencies
