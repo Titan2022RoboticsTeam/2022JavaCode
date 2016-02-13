@@ -1,10 +1,10 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.usfirst.frc.team2022.robot.commands.DriveCommand;
+import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,8 +20,22 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	
+	//Instantiate Subsystems
+	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	
+	//Create reference to OI
+	public static OI oi;
+	
+	//Create References to commands
+	public DriveCommand driveCommand;
+	
+	
     public void robotInit() {
-    	
+    	//Instantiate OI
+    	oi = new OI();
+    	//Instantiate Commands
+    	driveCommand = new DriveCommand();
     }
     
 	/**
@@ -37,6 +51,13 @@ public class Robot extends IterativeRobot {
     	
     }
 
+
+	@Override
+	public void teleopInit() {
+		driveCommand.start();
+	}
+
+    
     /**
      * This function is called periodically during autonomous
      */
