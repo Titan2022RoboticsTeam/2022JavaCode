@@ -60,13 +60,13 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	// Setter methods for each side.
-	private void setLeftSpeed(double speed) {
+	public void setLeftSpeed(double speed) {
 		
 		left.set(speed);
 		
 	}
 	
-	private void setRightSpeed (double speed) {
+	public void setRightSpeed (double speed) {
 		
 		right.set(speed);
 		
@@ -149,13 +149,13 @@ public class DriveSubsystem extends Subsystem {
 	}
 	
 	// Setter and Getter for inverted.
-	private boolean isInverted() {
+	public boolean isInverted() {
 		
 		return inverted;
 		
 	}
 	
-	private void toggleInversion() {
+	public void toggleInversion() {
 		
 		inverted = !inverted;
 		
