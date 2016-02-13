@@ -61,3 +61,9 @@ local.properties
 
 # Code Recommenders
 .recommenders/
+*.log
+*.log
+.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
+*.xmi
+.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.syncinfo.snap
+*.snap
