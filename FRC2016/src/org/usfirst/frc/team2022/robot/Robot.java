@@ -4,6 +4,7 @@ package org.usfirst.frc.team2022.robot;
 import org.usfirst.frc.team2022.robot.commands.DriveCommand;
 import org.usfirst.frc.team2022.robot.commands.autonomous.groups.DefaultAutonomousCommandGroup;
 import org.usfirst.frc.team2022.robot.commands.autonomous.groups.LowBarHighGoalAutonomousCommandGroup;
+import org.usfirst.frc.team2022.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team2022.robot.subsystems.ShooterSubsystem;
 
@@ -30,6 +31,7 @@ public class Robot extends IterativeRobot {
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
 	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
 	
 	//Create reference to OI
 	public static OI oi;
