@@ -2,6 +2,7 @@ package org.usfirst.frc.team2022.robot.commands.autonomous;
 
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.subsystems.CameraSubsystem;
 import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -9,24 +10,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TurnAutonomousCommand extends Command {
+public class TurnCameraAutonomousCommand extends Command {
+
 
 	DriveSubsystem driveSubsystem;
+	CameraSubsystem cameraSubsystem;
 	double angle;
 	boolean running = true;
 	double rightDistance;
 	double leftDistance;
 	
-    public TurnAutonomousCommand(double angle) {
+    public TurnCameraAutonomousCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveSubsystem);
+    	requries(Robot.cameraSubsystem);
     	driveSubsystem = Robot.driveSubsystem;
-    	this.angle = angle;
+    	cameraSubsystem = Robot.cameraSubsystem;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	angle = cameraSubsystem.getOffset();
     	double distance = (angle/360)*ConstantsMap.CIRCUMFERENCE;
     	
     	if(angle > 0){
