@@ -41,8 +41,8 @@ public class DriveSubsystem extends Subsystem {
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
 		
 		//Set Encoder distanceFromTower per pulse
-		rightEncoder.setDistancePerPulse(ConstantsMap.driveEncoderDistPerTick);
-		leftEncoder.setDistancePerPulse(ConstantsMap.driveEncoderDistPerTick);
+		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
+		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 		
 		//Instantiate PID controllers and output objects
 		pidOutputRight = new PIDOutputRight();
