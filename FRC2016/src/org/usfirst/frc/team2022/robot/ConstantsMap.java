@@ -34,6 +34,7 @@ public class ConstantsMap {
 	
 	//Robot Dimensions
 	public static final double ROBOT_WIDTH = 22;
+	public static final double CIRCUMFERENCE = ROBOT_WIDTH*Math.PI;
 	
 	//Speeds
 	public static final double HINGE_SPEED = 0.5;
