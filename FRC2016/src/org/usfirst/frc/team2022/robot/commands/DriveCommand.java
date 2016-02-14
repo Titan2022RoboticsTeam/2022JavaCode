@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2022.robot.commands;
 
 import org.usfirst.frc.team2022.robot.OI;
+import org.usfirst.frc.team2022.robot.Robot;
 import org.usfirst.frc.team2022.robot.controllers.Attack3;
 import org.usfirst.frc.team2022.robot.controllers.Xbox;
 import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
@@ -21,7 +22,8 @@ public class DriveCommand extends Command {
 	
     public DriveCommand() {
     	// Initializes the variable driveSubsystem.
-    	driveSubsystem = new DriveSubsystem();
+    	driveSubsystem = Robot.driveSubsystem;
+    	oi = Robot.oi;
     	
         // Requires method tells which subsystem it uses.
     	requires(driveSubsystem);

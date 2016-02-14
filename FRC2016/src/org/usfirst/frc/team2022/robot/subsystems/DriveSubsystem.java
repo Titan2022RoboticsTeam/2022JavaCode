@@ -2,6 +2,8 @@ package org.usfirst.frc.team2022.robot.subsystems;
 
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
+import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputLeft;
+import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputRight;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -46,17 +48,17 @@ public class DriveSubsystem extends Subsystem {
 		
 		//Instantiate PID controllers and output objects
 		pidOutputRight = new PIDOutputRight();
-		rightController = new PIDController(ConstantsMap.pC, ConstantsMap.iC, ConstantsMap.dC, ConstantsMap.kC, rightEncoder, pidOutputRight);
+		rightController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, rightEncoder, pidOutputRight);
 
 		pidOutputLeft = new PIDOutputLeft();
-		leftController = new PIDController(ConstantsMap.pC, ConstantsMap.iC, ConstantsMap.dC, ConstantsMap.kC, leftEncoder, pidOutputLeft);
+		leftController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, leftEncoder, pidOutputLeft);
 		
 		//Set Ouput Range for pid outputs
 		rightController.setOutputRange(-1, 1);
 		leftController.setOutputRange(-1,1);
 		
-		rightController.setAbsoluteTolerance(0.5);
-		leftController.setAbsoluteTolerance(0.5);
+		rightController.setAbsoluteTolerance(0.1);
+		leftController.setAbsoluteTolerance(0.1);
 	}
 	
 	// Setter methods for each side.

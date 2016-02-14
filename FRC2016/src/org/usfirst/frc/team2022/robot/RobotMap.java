@@ -16,5 +16,10 @@ public class RobotMap {
 	public static int ballLimitSwitchPort = 0;
 	public static int shooterLimitSwitchPort = 0;
 	public static int potentiometerPort = 0;
+	public static int rightShooterEncoderPortA = 0;
+	public static int rightShooterEncoderPortB = 0;
+	public static int leftShooterEncoderPortA = 0;
+	public static int leftShooterEncoderPortB = 0;
+
 	
 }
