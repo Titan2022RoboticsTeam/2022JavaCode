@@ -24,7 +24,7 @@ public class TurnCameraAutonomousCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveSubsystem);
-    	requries(Robot.cameraSubsystem);
+    	requires(Robot.cameraSubsystem);
     	driveSubsystem = Robot.driveSubsystem;
     	cameraSubsystem = Robot.cameraSubsystem;
     }
