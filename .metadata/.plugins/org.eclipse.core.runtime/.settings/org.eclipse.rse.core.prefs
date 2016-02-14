@@ -1,3 +1,4 @@
 activeuserprofiles=MD-0807;Team
 eclipse.preferences.version=1
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=Student
+useridperkey=MD-0807.Local\=Student;
