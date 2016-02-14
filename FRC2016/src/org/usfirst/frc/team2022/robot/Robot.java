@@ -5,6 +5,7 @@ import org.usfirst.frc.team2022.robot.commands.DriveCommand;
 import org.usfirst.frc.team2022.robot.commands.autonomous.groups.DefaultAutonomousCommandGroup;
 import org.usfirst.frc.team2022.robot.commands.autonomous.groups.LowBarHighGoalAutonomousCommandGroup;
 import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2022.robot.subsystems.ShooterSubsystem;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
 	
 	//Instantiate Subsystems
 	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 	
 	//Create reference to OI
 	public static OI oi;
