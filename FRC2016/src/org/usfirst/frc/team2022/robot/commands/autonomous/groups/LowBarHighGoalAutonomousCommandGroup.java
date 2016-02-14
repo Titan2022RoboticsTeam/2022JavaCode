@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2022.robot.commands.autonomous.groups;
 
 import org.usfirst.frc.team2022.robot.commands.autonomous.DriveStraightAutonomousCommand;
+import org.usfirst.frc.team2022.robot.commands.autonomous.DriveToShootingRange;
 import org.usfirst.frc.team2022.robot.commands.autonomous.TurnAutonomousCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -31,6 +32,8 @@ public class LowBarHighGoalAutonomousCommandGroup extends CommandGroup {
     	addSequential(new DriveStraightAutonomousCommand(100));
     	
     	addSequential(new TurnAutonomousCommand(30));
+    	
+    	addSequential(new DriveToShootingRange());
     	
     	
     }

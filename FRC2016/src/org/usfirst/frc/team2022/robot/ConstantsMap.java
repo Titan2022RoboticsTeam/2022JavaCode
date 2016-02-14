@@ -43,6 +43,22 @@ public class ConstantsMap {
 	public static final double DOWN_POSITION_ANGLE = -10.5;
 	public static final double FLAT_POSITION_ANGLE = 0;
 	public static final double UP_POSITION_ANGLE = 74.25;
-
+	
+	//Camera Constants
+	public static final double CAMERA_WIDTH_PIXEL = 640;
+	//The height of image in pixels
+	public static final double CAMERA_HEIGHT_PIXEL = 480;
+	//The field of view of camera
+	public static final double CAMERA_FOV = 54;
+	//The vertical distance of tower
+	public static final double TOWER_HEIGHT = 45-14;
+	// Width of the tape in inches
+	public static final double ACTUAL_WIDTH = 20;
+	//Height of goal in incheas
+	public static final double ACTUAL_HEIGHT = 12;
+	// Focal length of the camera
+	public static final double FOCAL_LENGTH = 750.75;
+	public static final double TARGET_DISTANCE_FROM_TOWER = 55.41;
+	
 	
 }
