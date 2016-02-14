@@ -12,7 +12,8 @@
 hs_err_pid*
 
 
-.metadata
+*.metadata
+*./metadata/*
 bin/
 tmp/
 *.tmp
@@ -23,8 +24,11 @@ local.properties
 .settings/
 .loadpath
 
+
 # Eclipse Core
 .project
+*.log
+*.snap
 
 # External tool builders
 .externalToolBuilders/
@@ -61,3 +65,18 @@ local.properties
 
 # Code Recommenders
 .recommenders/
+<<<<<<< HEAD
+*.snap
+*.log
+=======
+*.prefs
+*.log
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+*.prefs
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+>>>>>>> origin/master
+*.snap
+.metadata/.plugins/org.eclipse.core.resources/.projects/FRC2016/.markers.snap
+*.log
+*.dat
+.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt

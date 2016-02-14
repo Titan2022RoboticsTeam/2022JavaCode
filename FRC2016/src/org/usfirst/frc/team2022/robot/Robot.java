@@ -1,8 +1,15 @@
 
 package org.usfirst.frc.team2022.robot;
 
+import org.usfirst.frc.team2022.robot.commands.DriveCommand;
+import org.usfirst.frc.team2022.robot.commands.autonomous.groups.DefaultAutonomousCommandGroup;
+import org.usfirst.frc.team2022.robot.commands.autonomous.groups.LowBarHighGoalAutonomousCommandGroup;
+import org.usfirst.frc.team2022.robot.subsystems.CameraSubsystem;
+import org.usfirst.frc.team2022.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team2022.robot.subsystems.ShooterSubsystem;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,8 +27,31 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	
+	//Instantiate Subsystems
+	public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+	public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+	public static final CameraSubsystem cameraSubsystem = new CameraSubsystem();
+	
+	//Create reference to OI
+	public static OI oi;
+	
+	//Create References to commands
+	public DriveCommand driveCommand;
+	
+	SendableChooser autoChooser;
+	
+	CommandGroup autonomousCommand;
+	
+	
     public void robotInit() {
-    	
+    	//Instantiate OI
+    	oi = new OI();
+    	//Instantiate Commands
+    	driveCommand = new DriveCommand();
+    	autoChooser.addDefault("Default Command", new DefaultAutonomousCommandGroup());
+    	autoChooser.addObject("Low Bar High Goal Command", new LowBarHighGoalAutonomousCommandGroup());
+    	SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
     }
     
 	/**
@@ -34,9 +64,17 @@ public class Robot extends IterativeRobot {
 	 * If using the SendableChooser make sure to add them to the chooser code above as well.
 	 */
     public void autonomousInit() {
-    	
+    	autonomousCommand = (CommandGroup) autoChooser.getSelected();
+    	autonomousCommand.start();
     }
 
+
+	@Override
+	public void teleopInit() {
+		driveCommand.start();
+	}
+
+    
     /**
      * This function is called periodically during autonomous
      */
