@@ -2,7 +2,11 @@ package org.usfirst.frc.team2022.robot.commands.autonomous.groups;
 
 import org.usfirst.frc.team2022.robot.commands.autonomous.DriveStraightAutonomousCommand;
 import org.usfirst.frc.team2022.robot.commands.autonomous.DriveToShootingRange;
+import org.usfirst.frc.team2022.robot.commands.autonomous.SetShooterAngleAutonomousCommand;
+import org.usfirst.frc.team2022.robot.commands.autonomous.ShootAutonomousCommand;
 import org.usfirst.frc.team2022.robot.commands.autonomous.TurnAutonomousCommand;
+import org.usfirst.frc.team2022.robot.commands.autonomous.TurnCameraAutonomousCommand;
+import org.usfirst.frc.team2022.robot.subsystems.ShooterPositions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -29,11 +33,27 @@ public class LowBarHighGoalAutonomousCommandGroup extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
+    	
+    	//Drive past low bar
     	addSequential(new DriveStraightAutonomousCommand(100));
     	
+    	//Face towards the tower
     	addSequential(new TurnAutonomousCommand(30));
     	
+    	//Drive towards shooting range using encoders, while getting shooter in ready position
+    	addSequential(new DriveStraightAutonomousCommand(50));
+    	addParallel(new SetShooterAngleAutonomousCommand(ShooterPositions.ready));
+    	
+    	//Use camera to straighten robot with tower
+    	addSequential(new TurnCameraAutonomousCommand());
+    	
+    	//Use camera to drive to center of shooting range
     	addSequential(new DriveToShootingRange());
+    	
+    	//Shoot
+    	addSequential(new ShootAutonomousCommand());
+    	
+    	
     	
     	
     }

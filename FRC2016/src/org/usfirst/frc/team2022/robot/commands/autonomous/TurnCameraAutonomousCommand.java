@@ -19,6 +19,7 @@ public class TurnCameraAutonomousCommand extends Command {
 	boolean running = true;
 	double rightDistance;
 	double leftDistance;
+	boolean shoot;
 	
     public TurnCameraAutonomousCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -31,38 +32,45 @@ public class TurnCameraAutonomousCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	angle = cameraSubsystem.getOffset();
-    	double distance = (angle/360)*ConstantsMap.CIRCUMFERENCE;
-    	
-    	if(angle > 0){
-    		rightDistance = -distance;
-    		leftDistance = distance;
+    	shoot = cameraSubsystem.getNetworkTableValues();
+    	if(shoot){
+    		angle = cameraSubsystem.getOffset();
+        	double distance = (angle/360)*ConstantsMap.CIRCUMFERENCE;
+        	
+        	if(angle > 0){
+        		rightDistance = -distance;
+        		leftDistance = distance;
+        	}
+        	else{
+        		rightDistance = distance;
+        		leftDistance = -distance;
+        	}
+        	
+        	driveSubsystem.resetEncoders();
     	}
-    	else{
-    		rightDistance = distance;
-    		leftDistance = -distance;
-    	}
     	
-    	driveSubsystem.resetEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveSubsystem.enableRightPIDController(rightDistance);
-    	driveSubsystem.enableLeftPIDController(leftDistance);
-    	while(driveSubsystem.rightPIDOnTarget() == false && driveSubsystem.leftPIDOnTarget() == false){
-    		driveSubsystem.setRightSpeed(driveSubsystem.getRightPIDOutput());
-    		driveSubsystem.setLeftSpeed(driveSubsystem.getLeftPIDOuput());
+    	if(shoot){
+    		driveSubsystem.enableRightPIDController(rightDistance);
+        	driveSubsystem.enableLeftPIDController(leftDistance);
+        	while(driveSubsystem.rightPIDOnTarget() == false && driveSubsystem.leftPIDOnTarget() == false){
+        		driveSubsystem.setRightSpeed(driveSubsystem.getRightPIDOutput());
+        		driveSubsystem.setLeftSpeed(driveSubsystem.getLeftPIDOuput());
+        	}
+        	long time = System.currentTimeMillis();
+        	driveSubsystem.disablePIDControllers();
+        	driveSubsystem.setRightSpeed(0);
+        	driveSubsystem.setLeftSpeed(0);
+        	while(System.currentTimeMillis() < time + 1000){
+        		
+        	}
+        	driveSubsystem.resetEncoders();
     	}
-    	long time = System.currentTimeMillis();
-    	driveSubsystem.disablePIDControllers();
-    	driveSubsystem.setRightSpeed(0);
-    	driveSubsystem.setLeftSpeed(0);
-    	while(System.currentTimeMillis() < time + 1000){
-    		
-    	}
-    	driveSubsystem.resetEncoders();
-	    running = false;
+    	running = false;
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

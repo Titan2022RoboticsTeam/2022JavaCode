@@ -43,6 +43,7 @@ public class ConstantsMap {
 	//Shooter Positions
 	public static final double DOWN_POSITION_ANGLE = -10.5;
 	public static final double FLAT_POSITION_ANGLE = 0;
+	public static final double READY_POSITION_ANGLE = 70;
 	public static final double UP_POSITION_ANGLE = 74.25;
 	
 	//Camera Constants

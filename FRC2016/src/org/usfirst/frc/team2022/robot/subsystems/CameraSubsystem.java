@@ -18,6 +18,8 @@ public class CameraSubsystem extends Subsystem {
 	private HashMap<String, Double> networkTableValues= new HashMap();
 	//Hashnmap of coordinates of rectangle from Roborealm
 	private HashMap<String, Double> coordinates= new HashMap();	
+	//Shoot?
+	private boolean shoot = false;
 	
 	public double distanceFromTower = 0;
 	
@@ -51,7 +53,9 @@ public class CameraSubsystem extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void getNetworkTableValues(){
+    public boolean getNetworkTableValues(){
+    	
+    	shoot = false;
     	
     	table = NetworkTable.getTable("SmartDashboard");
     	
@@ -68,6 +72,7 @@ public class CameraSubsystem extends Subsystem {
     		coordinates.replace("p3y", coordinatesArray.get(5));
     		coordinates.replace("p4x", coordinatesArray.get(6));
     		coordinates.replace("p4y", coordinatesArray.get(7));
+    		shoot = true;
     	}
     	
     	/*p2 = top left corner of box
@@ -76,26 +81,29 @@ public class CameraSubsystem extends Subsystem {
 		 * p4 = bottom right
 		 * origin is bottom left
 		 */
-
-		//Get average width of rectangle
-		double widthOne = Math.sqrt(Math.pow(coordinates.get("p2x")-coordinates.get("p1x"), 2)+(Math.pow(coordinates.get("p2y")-coordinates.get("p1y"), 2)));
-	
-		double widthTwo = Math.sqrt(Math.pow(coordinates.get("p3x")-coordinates.get("p4x"), 2)+(Math.pow(coordinates.get("p3y")-coordinates.get("p4y"), 2)));
-
-		double averageWidth = (widthOne + widthTwo)/2;
-			
-		networkTableValues.replace("width", averageWidth);
-		
-		//Get average height of rectangle
-		
-		double heightOne = Math.sqrt(Math.pow(coordinates.get("p1x")-coordinates.get("p4x"), 2)+(Math.pow(coordinates.get("p1y")-coordinates.get("p4y"), 2)));
-
-		double heightTwo = Math.sqrt(Math.pow(coordinates.get("p2x")-coordinates.get("p3x"), 2)+(Math.pow(coordinates.get("p2y")-coordinates.get("p3y"), 2)));
-
-		double averageHeight = (heightOne + heightTwo)/2;
-		
-		networkTableValues.replace("height", averageHeight);
     	
+    	if(shoot){
+    		//Get average width of rectangle
+    		double widthOne = Math.sqrt(Math.pow(coordinates.get("p2x")-coordinates.get("p1x"), 2)+(Math.pow(coordinates.get("p2y")-coordinates.get("p1y"), 2)));
+    	
+    		double widthTwo = Math.sqrt(Math.pow(coordinates.get("p3x")-coordinates.get("p4x"), 2)+(Math.pow(coordinates.get("p3y")-coordinates.get("p4y"), 2)));
+
+    		double averageWidth = (widthOne + widthTwo)/2;
+    			
+    		networkTableValues.replace("width", averageWidth);
+    		
+    		//Get average height of rectangle
+    		
+    		double heightOne = Math.sqrt(Math.pow(coordinates.get("p1x")-coordinates.get("p4x"), 2)+(Math.pow(coordinates.get("p1y")-coordinates.get("p4y"), 2)));
+
+    		double heightTwo = Math.sqrt(Math.pow(coordinates.get("p2x")-coordinates.get("p3x"), 2)+(Math.pow(coordinates.get("p2y")-coordinates.get("p3y"), 2)));
+
+    		double averageHeight = (heightOne + heightTwo)/2;
+    		
+    		networkTableValues.replace("height", averageHeight);
+    	}
+		
+    	return shoot;
     	
     }
     
@@ -123,7 +131,7 @@ public class CameraSubsystem extends Subsystem {
 		return horizontalDistance;
     }
     
-public double getOffset(){
+    public double getOffset(){
 		
 		double percentHeight = networkTableValues.get("height")/ConstantsMap.CAMERA_HEIGHT_PIXEL;
 		
@@ -153,6 +161,7 @@ public double getOffset(){
 		
 		return offset;
 	}
+    
     
     
 }
