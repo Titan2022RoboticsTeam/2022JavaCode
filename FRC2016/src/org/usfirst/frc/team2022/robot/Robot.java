@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2022.robot;
 
 import org.usfirst.frc.team2022.robot.commands.DriveCommand;
+import org.usfirst.frc.team2022.robot.commands.ShooterCommand;
 import org.usfirst.frc.team2022.robot.commands.autonomous.groups.DefaultAutonomousCommandGroup;
 import org.usfirst.frc.team2022.robot.commands.autonomous.groups.LowBarHighGoalAutonomousCommandGroup;
 import org.usfirst.frc.team2022.robot.subsystems.CameraSubsystem;
@@ -38,6 +39,7 @@ public class Robot extends IterativeRobot {
 	
 	//Create References to commands
 	public DriveCommand driveCommand;
+	public ShooterCommand shooterCommand;
 	
 	SendableChooser autoChooser;
 	
@@ -49,6 +51,8 @@ public class Robot extends IterativeRobot {
     	oi = new OI();
     	//Instantiate Commands
     	driveCommand = new DriveCommand();
+    	shooterCommand = new ShooterCommand();
+    	//Put autonomous options on the smartdashboard
     	autoChooser.addDefault("Default Command", new DefaultAutonomousCommandGroup());
     	autoChooser.addObject("Low Bar High Goal Command", new LowBarHighGoalAutonomousCommandGroup());
     	SmartDashboard.putData("Autonomous Mode Chooser", autoChooser);
@@ -72,6 +76,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		driveCommand.start();
+		shooterCommand.start();
 	}
 
     

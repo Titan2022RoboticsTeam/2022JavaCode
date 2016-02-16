@@ -2,6 +2,9 @@ package org.usfirst.frc.team2022.robot.commands;
 
 import org.usfirst.frc.team2022.robot.OI;
 import org.usfirst.frc.team2022.robot.Robot;
+import org.usfirst.frc.team2022.robot.commands.autonomous.DriveToShootingRange;
+import org.usfirst.frc.team2022.robot.commands.autonomous.ShootAutonomousCommand;
+import org.usfirst.frc.team2022.robot.commands.autonomous.TurnCameraAutonomousCommand;
 import org.usfirst.frc.team2022.robot.subsystems.Intakes;
 import org.usfirst.frc.team2022.robot.subsystems.ShooterPositions;
 import org.usfirst.frc.team2022.robot.subsystems.ShooterSubsystem;
@@ -16,6 +19,7 @@ public class ShooterCommand extends Command {
 	ShooterSubsystem shooterSubsystem;
 	//Create reference to OI
 	OI oi;
+	long lastShot = 0;
 
     public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -33,26 +37,33 @@ public class ShooterCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if(oi.attack3.getButton(1)){
-    		shooterSubsystem.setShooterAngle(ShooterPositions.down);
-    	}
-    	else if(oi.attack3.getButton(2)){
-    		shooterSubsystem.setShooterAngle(ShooterPositions.flat);
-    	}
-    	else if(oi.attack3.getButton(3)){
-    		shooterSubsystem.setShooterAngle(ShooterPositions.up);
-    	}
-    	
-    	if(oi.attack3.getButton(4)){
+    	//Intake Buttons
+    	if(oi.xbox.GetLeftTriggers() > 0.1){
     		shooterSubsystem.setIntake(Intakes.in);
     	}
-    	else if(oi.attack3.getButton(5)){
-    		shooterSubsystem.setIntake(Intakes.out);
+    	else if(oi.xbox.GetRightTriggers() > 0.1){
+    		if(lastShot < System.currentTimeMillis() - 1000){
+    			//Automatically Shoot
+    			new TurnCameraAutonomousCommand();
+    			new DriveToShootingRange();
+    			new ShootAutonomousCommand();
+    			lastShot = System.currentTimeMillis();
+    		}
     	}
     	else{
     		shooterSubsystem.setIntake(Intakes.neutral);
     	}
     	
+    	//Set Shooter Angle Buttons
+    	if(oi.xbox.GetAValue()){
+    		shooterSubsystem.setShooterAngle(ShooterPositions.down);
+    	}
+    	else if(oi.xbox.GetBValue()){
+    		shooterSubsystem.setShooterAngle(ShooterPositions.flat);
+    	}
+    	else if(oi.xbox.GetYValue()){
+    		shooterSubsystem.setShooterAngle(ShooterPositions.ready);
+    	}
     	
     }
 

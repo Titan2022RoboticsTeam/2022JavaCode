@@ -15,6 +15,7 @@ public class DriveToShootingRange extends Command {
 	DriveSubsystem driveSubsystem;
 	CameraSubsystem cameraSubsystem;
 	boolean running = true;
+	boolean shoot;
 	public double distanceFromTower;
 	public double distanceToMove;
 	
@@ -30,30 +31,36 @@ public class DriveToShootingRange extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	driveSubsystem.resetEncoders();
-    	distanceFromTower = cameraSubsystem.getDistance();
-    	distanceToMove = distanceFromTower - ConstantsMap.TARGET_DISTANCE_FROM_TOWER;
+    	shoot = cameraSubsystem.getNetworkTableValues();
+    	if(shoot){
+    		distanceFromTower = cameraSubsystem.getDistance();
+        	distanceToMove = distanceFromTower - ConstantsMap.TARGET_DISTANCE_FROM_TOWER;
+    	}
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveSubsystem.enableLeftPIDController(distanceToMove);
-    	driveSubsystem.enableRightPIDController(distanceToMove);
-    	while(driveSubsystem.rightPIDOnTarget() == false && driveSubsystem.leftPIDOnTarget() == false){
-    		driveSubsystem.setRightSpeed(driveSubsystem.getRightPIDOutput());
-    		driveSubsystem.setLeftSpeed(driveSubsystem.getLeftPIDOuput());
-    	}
+    	if(shoot){
+    		driveSubsystem.enableLeftPIDController(distanceToMove);
+        	driveSubsystem.enableRightPIDController(distanceToMove);
+        	while(driveSubsystem.rightPIDOnTarget() == false && driveSubsystem.leftPIDOnTarget() == false){
+        		driveSubsystem.setRightSpeed(driveSubsystem.getRightPIDOutput());
+        		driveSubsystem.setLeftSpeed(driveSubsystem.getLeftPIDOuput());
+        	}
+        	
+        	long time = System.currentTimeMillis();
+    		driveSubsystem.disablePIDControllers();
+    		driveSubsystem.setRightSpeed(0);
+    		driveSubsystem.setLeftSpeed(0);
+        	while(System.currentTimeMillis() < time + 1000){
+        		
+        	}
+        	driveSubsystem.resetEncoders();
+       	}
     	
-    	long time = System.currentTimeMillis();
-		driveSubsystem.disablePIDControllers();
-		driveSubsystem.setRightSpeed(0);
-		driveSubsystem.setLeftSpeed(0);
-    	while(System.currentTimeMillis() < time + 1000){
-    		
-    	}
-    	driveSubsystem.resetEncoders();
-	    
-	        
-    	running = false;
+		running = false;
+    	
     	
     }
 

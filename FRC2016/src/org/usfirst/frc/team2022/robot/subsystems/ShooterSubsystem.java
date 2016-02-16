@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -94,8 +95,8 @@ public class ShooterSubsystem extends Subsystem {
 		switch(i) {
 			case in :
 				if(ballIsInChannel() == false){
-					intakeLeft.set(-1);
-					intakeRight.set(-1);
+					intakeLeft.set(-0.5);
+					intakeRight.set(-0.5);
 				}
 				else{
 					intakeLeft.set(0);
@@ -112,6 +113,8 @@ public class ShooterSubsystem extends Subsystem {
 					intakeLeft.set(pidOutputLeft.getOutput());
 					intakeRight.set(pidOutputRight.getOutput());
 				}
+				setShooterAngle(ShooterPositions.shoot);
+				Timer.delay(500);
 				//Then write code for kicker
 				disablePIDControllers();
 				intakeLeft.set(0);
@@ -130,7 +133,10 @@ public class ShooterSubsystem extends Subsystem {
 			case flat:
 				pos = ConstantsMap.FLAT_POSITION_ANGLE;
 				break;
-			case up:
+			case ready:
+				pos = ConstantsMap.READY_POSITION_ANGLE;
+				break;
+			case shoot:
 				pos = ConstantsMap.UP_POSITION_ANGLE;
 				break;
 		}
@@ -151,6 +157,8 @@ public class ShooterSubsystem extends Subsystem {
 			}
 				
 		}
+		
+		hinge.set(0);
 			
 	}
 	

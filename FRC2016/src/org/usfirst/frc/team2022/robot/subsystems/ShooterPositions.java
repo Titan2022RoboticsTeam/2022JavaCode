@@ -4,6 +4,6 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 
 public enum ShooterPositions {
 
-	down, flat, up
+	down, flat, ready, shoot
 	
 }
