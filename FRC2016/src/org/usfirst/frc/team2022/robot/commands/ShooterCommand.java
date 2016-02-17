@@ -50,6 +50,9 @@ public class ShooterCommand extends Command {
     			lastShot = System.currentTimeMillis();
     		}
     	}
+    	else if(oi.xbox.GetRightBumperValue()){
+    		new ShootAutonomousCommand();
+    	}
     	else{
     		shooterSubsystem.setIntake(Intakes.neutral);
     	}
