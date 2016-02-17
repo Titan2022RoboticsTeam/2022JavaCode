@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class LowBarHighGoalAutonomousCommandGroup extends CommandGroup {
-    
+
     public  LowBarHighGoalAutonomousCommandGroup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());

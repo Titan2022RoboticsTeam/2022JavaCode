@@ -63,6 +63,8 @@ public class ShooterCommand extends Command {
     	}
     	else if(oi.xbox.GetYValue()){
     		shooterSubsystem.setShooterAngle(ShooterPositions.ready);
+    	} else if (oi.xbox.GetXValue()) {
+    		shooterSubsystem.setShooterAngle(ShooterPositions.shoot);
     	}
     	
     }
