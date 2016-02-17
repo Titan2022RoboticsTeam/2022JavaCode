@@ -5,13 +5,12 @@ import org.usfirst.frc.team2022.robot.RobotMap;
 import org.usfirst.frc.team2022.robot.commands.ShooterCommand;
 import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputLeft;
 import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputRight;
-import org.usfirst.frc.team2022.robot.subsystems.PID.PIDSourceLeftShooter;
-import org.usfirst.frc.team2022.robot.subsystems.PID.PIDSourceRightShooter;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -34,10 +33,6 @@ public class ShooterSubsystem extends Subsystem {
 	//names for PID Output
 	PIDOutputRight pidOutputRight;
 	PIDOutputLeft pidOutputLeft;
-	
-	//names for PID Source
-	PIDSourceRightShooter pidSourceRight;
-	PIDSourceLeftShooter pidSourceLeft;
 	
 	// names for sensor objects
 	DigitalInput ballLimitSwitch;
@@ -64,20 +59,20 @@ public class ShooterSubsystem extends Subsystem {
 		rightEncoder = new Encoder(RobotMap.rightShooterEncoderPortA, RobotMap.rightShooterEncoderPortB, false);
 		leftEncoder = new Encoder(RobotMap.leftShooterEncoderPortA, RobotMap.leftShooterEncoderPortB, false);
 		
+		//Set PID Source Output
+		rightEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+		leftEncoder.setPIDSourceParameter(PIDSourceParameter.kRate);
+		
 		//Set distance per pulse for encoders
 		rightEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 		leftEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 		
-		//Instantiate PID Sources
-		pidSourceRight = new PIDSourceRightShooter();
-		pidSourceLeft = new PIDSourceLeftShooter();
-		
 		//Instantiate PID controllers and output objects
 		pidOutputRight = new PIDOutputRight();
-		rightController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, pidSourceRight, pidOutputRight);
+		rightController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, rightEncoder, pidOutputRight);
 
 		pidOutputLeft = new PIDOutputLeft();
-		leftController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, pidSourceLeft, pidOutputLeft);
+		leftController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, leftEncoder, pidOutputLeft);
 		
 		//Set Ouput Range for pid outputs
 		rightController.setOutputRange(-1, 1);
