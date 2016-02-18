@@ -20,6 +20,9 @@ public class ShooterCommand extends Command {
 	//Create reference to OI
 	OI oi;
 	long lastShot = 0;
+	TurnCameraAutonomousCommand turnCameraAutonomousCommand= new TurnCameraAutonomousCommand();
+	DriveToShootingRange driveToShootingRange = new DriveToShootingRange();
+	ShootAutonomousCommand shootAutonomousCommand = new ShootAutonomousCommand();
 
     public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -43,11 +46,27 @@ public class ShooterCommand extends Command {
     	}
     	else if(oi.xbox.GetRightTriggers() > 0.1){
     		if(lastShot < System.currentTimeMillis() - 1000){
-    			//Automatically Shoot
-    			new TurnCameraAutonomousCommand();
-    			new DriveToShootingRange();
-    			new ShootAutonomousCommand();
-    			lastShot = System.currentTimeMillis();
+    			boolean finished = false;
+    			while(oi.xbox.GetLeftBumperValue() == false || finished == false){
+    				//Automatically Shoot
+        			turnCameraAutonomousCommand.start();
+        			while(turnCameraAutonomousCommand.isRunning()){
+        				
+        			}
+        			driveToShootingRange.start();
+        			while(driveToShootingRange.isRunning()){
+        				
+        			}
+        			shootAutonomousCommand.start();
+        			while(shootAutonomousCommand.isRunning()){
+        				
+        			}
+        			lastShot = System.currentTimeMillis();
+        			finished = true;
+    			}
+    			turnCameraAutonomousCommand.cancel();
+    			driveToShootingRange.cancel();
+    			shootAutonomousCommand.cancel();
     		}
     	}
     	else if(oi.xbox.GetRightBumperValue()){
