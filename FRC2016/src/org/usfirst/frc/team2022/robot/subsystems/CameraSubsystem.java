@@ -59,19 +59,18 @@ public class CameraSubsystem extends Subsystem {
     	
     	table = NetworkTable.getTable("SmartDashboard");
     	
-    	ArrayList<Double> coordinatesArray = new ArrayList();
     	
-    	table.retrieveValue("BFR_COORDINATES", coordinates);
+    	double[] coordinatesArray = table.getNumberArray("BFR_COORDINATES", new double[0]);
     	
-    	if(coordinatesArray.size() != 0){
-    		coordinates.replace("p1x", coordinatesArray.get(0));
-    		coordinates.replace("p1y", coordinatesArray.get(1));
-    		coordinates.replace("p2x", coordinatesArray.get(2));
-    		coordinates.replace("p2y", coordinatesArray.get(3));
-    		coordinates.replace("p3x", coordinatesArray.get(4));
-    		coordinates.replace("p3y", coordinatesArray.get(5));
-    		coordinates.replace("p4x", coordinatesArray.get(6));
-    		coordinates.replace("p4y", coordinatesArray.get(7));
+    	if(coordinatesArray.length != 0){
+    		coordinates.replace("p1x", coordinatesArray[0]);
+    		coordinates.replace("p1y", coordinatesArray[1]);
+    		coordinates.replace("p2x", coordinatesArray[2]);
+    		coordinates.replace("p2y", coordinatesArray[3]);
+    		coordinates.replace("p3x", coordinatesArray[4]);
+    		coordinates.replace("p3y", coordinatesArray[5]);
+    		coordinates.replace("p4x", coordinatesArray[6]);
+    		coordinates.replace("p4y", coordinatesArray[7]);
     		shoot = true;
     	}
     	
