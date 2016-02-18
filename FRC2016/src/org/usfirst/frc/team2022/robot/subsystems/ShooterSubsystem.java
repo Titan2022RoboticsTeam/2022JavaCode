@@ -3,7 +3,6 @@ package org.usfirst.frc.team2022.robot.subsystems;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import org.usfirst.frc.team2022.robot.commands.ShooterCommand;
-import org.usfirst.frc.team2022.robot.subsystems.PID.DistanceEncoder;
 import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputLeft;
 import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputRight;
 
