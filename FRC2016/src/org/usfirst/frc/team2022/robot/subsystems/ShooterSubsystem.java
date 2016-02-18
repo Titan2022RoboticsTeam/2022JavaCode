@@ -141,6 +141,7 @@ public class ShooterSubsystem extends Subsystem {
 				intakeLeft.set(0);
 				intakeRight.set(0);
 			case out :
+				resetEncoders();
 				enableRightPIDController(ConstantsMap.SHOOTER_SPEED);
 				enableLeftPIDController(ConstantsMap.SHOOTER_SPEED);
 				while(rightController.onTarget() == false && leftController.onTarget() == false){
@@ -148,7 +149,7 @@ public class ShooterSubsystem extends Subsystem {
 					intakeRight.set(pidOutputRight.getOutput());
 				}
 				setShooterAngle(ShooterPositions.shoot);
-				Timer.delay(500);
+				Timer.delay(1000);
 				//Then write code for kicker
 				disablePIDControllers();
 				intakeLeft.set(0);
