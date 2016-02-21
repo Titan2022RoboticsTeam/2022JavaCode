@@ -64,54 +64,16 @@ public class ShooterSubsystem extends Subsystem {
 		rightEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 		leftEncoder.setDistancePerPulse(ConstantsMap.SHOOTER_ENCODER_DIST_PER_TICK);
 		
-		PIDSource rightPidSource = new PIDSource() {
-			
-			@Override
-			public void setPIDSourceType(PIDSourceType arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public double pidGet() {
-				// TODO Auto-generated method stub
-				return rightEncoder.getRate();
-			}
-			
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-		
-		PIDSource leftPIDSource = new PIDSource() {
-			
-			@Override
-			public void setPIDSourceType(PIDSourceType arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public double pidGet() {
-				// TODO Auto-generated method stub
-				return leftEncoder.getRate();
-			}
-			
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
+		// sets that the PID controllers are going to get the speeds of the motors
+		rightEncoder.setPIDSourceType(PIDSourceType.kRate);
+		leftEncoder.setPIDSourceType(PIDSourceType.kRate);
 		
 		//Instantiate PID controllers and output objects
 		pidOutputRight = new PIDOutputRight();
-		rightController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, rightPidSource, pidOutputRight);
+		rightController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, rightEncoder, pidOutputRight);
 
 		pidOutputLeft = new PIDOutputLeft();
-		leftController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, leftPIDSource, pidOutputLeft);
+		leftController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, leftEncoder, pidOutputLeft);
 		
 		//Set Ouput Range for pid outputs
 		rightController.setOutputRange(-1, 1);
