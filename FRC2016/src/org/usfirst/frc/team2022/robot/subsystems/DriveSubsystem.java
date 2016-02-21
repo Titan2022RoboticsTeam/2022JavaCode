@@ -44,58 +44,21 @@ public class DriveSubsystem extends Subsystem {
 		leftEncoder = new Encoder(RobotMap.leftEncoderA, RobotMap.leftEncoderB, false);
 		rightEncoder = new Encoder(RobotMap.rightEncoderA, RobotMap.rightEncoderB, false);
 		
-		PIDSource rightPIDSource = new PIDSource() {
-			
-			@Override
-			public void setPIDSourceType(PIDSourceType arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public double pidGet() {
-				// TODO Auto-generated method stub
-				return rightEncoder.getDistance();
-			}
-			
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
+		// sets that the PID controllers are going to get the speeds of the motors
+		rightEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+		leftEncoder.setPIDSourceType(PIDSourceType.kDisplacement);
 		
-		PIDSource leftPIDSource = new PIDSource() {
-			
-			@Override
-			public void setPIDSourceType(PIDSourceType arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public double pidGet() {
-				// TODO Auto-generated method stub
-				return leftEncoder.getDistance();
-			}
-			
-			@Override
-			public PIDSourceType getPIDSourceType() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
 		//Set Encoder distanceFromTower per pulse
 		rightEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 		
 		//Instantiate PID controllers and output objects
 		pidOutputRight = new PIDOutputRight();
-		rightController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, rightPIDSource, pidOutputRight);
+		rightController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, rightEncoder, pidOutputRight);
 
 		//Set PID Source Output
 		pidOutputLeft = new PIDOutputLeft();
-		leftController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, leftPIDSource, pidOutputLeft);
+		leftController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, leftEncoder, pidOutputLeft);
 		
 		//Set Ouput Range for pid outputs
 		rightController.setOutputRange(-1, 1);
