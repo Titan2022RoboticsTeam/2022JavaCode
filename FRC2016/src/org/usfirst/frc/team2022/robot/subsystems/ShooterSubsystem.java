@@ -3,8 +3,7 @@ package org.usfirst.frc.team2022.robot.subsystems;
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import org.usfirst.frc.team2022.robot.commands.ShooterCommand;
-import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputLeft;
-import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputRight;
+import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputMotor;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -25,15 +24,17 @@ public class ShooterSubsystem extends Subsystem {
 	TalonSRX intakeLeft, intakeRight, hinge;
 	
 	//names for wheel encoders
-	Encoder rightEncoder, leftEncoder;
+	Encoder rightEncoder, leftEncoder, hingeEncoder;
 	
 	//names for PID Controllers
 	PIDController rightController;
 	PIDController leftController;
+	PIDController hingeController;
 	
 	//names for PID Output
-	PIDOutputRight pidOutputRight;
-	PIDOutputLeft pidOutputLeft;
+	PIDOutputMotor pidOutputRight;
+	PIDOutputMotor pidOutputLeft;
+	PIDOutputMotor pidOutputHinge;
 	
 	// names for sensor objects
 	DigitalInput ballLimitSwitch;
@@ -69,11 +70,14 @@ public class ShooterSubsystem extends Subsystem {
 		leftEncoder.setPIDSourceType(PIDSourceType.kRate);
 		
 		//Instantiate PID controllers and output objects
-		pidOutputRight = new PIDOutputRight();
+		pidOutputRight = new PIDOutputMotor();
 		rightController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, rightEncoder, pidOutputRight);
 
-		pidOutputLeft = new PIDOutputLeft();
+		pidOutputLeft = new PIDOutputMotor();
 		leftController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, leftEncoder, pidOutputLeft);
+		
+		pidOutputHinge = new PIDOutputMotor();
+		hingeController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, hingeEncoder, pidOutputHinge);
 		
 		//Set Ouput Range for pid outputs
 		rightController.setOutputRange(-1, 1);

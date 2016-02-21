@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
-public class PIDOutputLeft implements PIDOutput{
+public class PIDOutputMotor implements PIDOutput{
 	double output;
 	
 	@Override

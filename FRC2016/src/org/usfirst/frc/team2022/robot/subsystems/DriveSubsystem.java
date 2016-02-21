@@ -2,8 +2,7 @@ package org.usfirst.frc.team2022.robot.subsystems;
 
 import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
-import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputLeft;
-import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputRight;
+import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputMotor;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -30,10 +29,10 @@ public class DriveSubsystem extends Subsystem {
 	
 	//PID Controllers- A loop that controllers motor speed 
 	public PIDController rightController;
-	public PIDOutputRight pidOutputRight;
+	public PIDOutputMotor pidOutputRight;
 	
 	public PIDController leftController;
-	public PIDOutputLeft pidOutputLeft;
+	public PIDOutputMotor pidOutputLeft;
 	
 	// Constructor initializes these variables.
 	public DriveSubsystem() {
@@ -53,11 +52,11 @@ public class DriveSubsystem extends Subsystem {
 		leftEncoder.setDistancePerPulse(ConstantsMap.DRIVE_ENCODER_DIST_PER_TICK);
 		
 		//Instantiate PID controllers and output objects
-		pidOutputRight = new PIDOutputRight();
+		pidOutputRight = new PIDOutputMotor();
 		rightController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, rightEncoder, pidOutputRight);
 
 		//Set PID Source Output
-		pidOutputLeft = new PIDOutputLeft();
+		pidOutputLeft = new PIDOutputMotor();
 		leftController = new PIDController(ConstantsMap.pDrive, ConstantsMap.iDrive, ConstantsMap.dDrive, ConstantsMap.fDrive, leftEncoder, pidOutputLeft);
 		
 		//Set Ouput Range for pid outputs
