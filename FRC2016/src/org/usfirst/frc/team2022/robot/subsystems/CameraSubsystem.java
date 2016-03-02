@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2022.robot.subsystems;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.usfirst.frc.team2022.robot.ConstantsMap;
@@ -144,7 +143,7 @@ public class CameraSubsystem extends Subsystem {
 		
 		double diagonalDistance = (ConstantsMap.ACTUAL_WIDTH * ConstantsMap.FOCAL_LENGTH)/networkTableValues.get("width");
 		
-		
+		double cameraOffset = Math.atan(Math.toRadians(ConstantsMap.CAMERA_OFFSET_INCHES/diagonalDistance));
 		// Gets midpoint coordinates of the rectangle
 		
 		double midPointX = (coordinates.get("p2x")+coordinates.get("p4x")/2);
@@ -155,8 +154,9 @@ public class CameraSubsystem extends Subsystem {
 
 		double distanceFromCenterInches = midPointX / ConstantsMap.CAMERA_WIDTH_PIXEL*cameraWidthInches;
 		
-		double offset = Math.atan((distanceFromCenterInches/horizontalDistance)*(180/Math.PI));
+		double offset = Math.atan((distanceFromCenterInches/diagonalDistance)*(180/Math.PI));
 		
+		offset = offset - cameraOffset;
 		
 		return offset;
 	}

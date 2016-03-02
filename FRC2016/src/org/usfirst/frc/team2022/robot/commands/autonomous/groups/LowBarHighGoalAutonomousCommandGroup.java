@@ -4,8 +4,8 @@ import org.usfirst.frc.team2022.robot.commands.autonomous.DriveStraightAutonomou
 import org.usfirst.frc.team2022.robot.commands.autonomous.DriveToShootingRange;
 import org.usfirst.frc.team2022.robot.commands.autonomous.SetShooterAngleAutonomousCommand;
 import org.usfirst.frc.team2022.robot.commands.autonomous.ShootAutonomousCommand;
-import org.usfirst.frc.team2022.robot.commands.autonomous.TurnAutonomousCommand;
 import org.usfirst.frc.team2022.robot.commands.autonomous.TurnCameraAutonomousCommand;
+import org.usfirst.frc.team2022.robot.commands.autonomous.TurnGyroAutonomousCommand;
 import org.usfirst.frc.team2022.robot.subsystems.ShooterPositions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -38,7 +38,7 @@ public class LowBarHighGoalAutonomousCommandGroup extends CommandGroup {
     	addSequential(new DriveStraightAutonomousCommand(100));
     	
     	//Face towards the tower
-    	addSequential(new TurnAutonomousCommand(30));
+    	addSequential(new TurnGyroAutonomousCommand(30));
     	
     	//Drive towards shooting range using encoders, while getting shooter in ready position
     	addSequential(new DriveStraightAutonomousCommand(50));

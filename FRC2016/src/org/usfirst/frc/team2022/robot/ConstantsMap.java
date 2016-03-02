@@ -61,6 +61,8 @@ public class ConstantsMap {
 	// Focal length of the camera
 	public static final double FOCAL_LENGTH = 750.75;
 	public static final double TARGET_DISTANCE_FROM_TOWER = 55.41;
+	public static final double CAMERA_OFFSET = 7.15647;
+	public static final double CAMERA_OFFSET_INCHES = 10.444;
 	
 	
 }
