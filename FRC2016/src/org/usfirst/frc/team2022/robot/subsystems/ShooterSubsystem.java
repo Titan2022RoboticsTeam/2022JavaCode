@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.Timer;
@@ -77,7 +76,7 @@ public class ShooterSubsystem extends Subsystem {
 		leftController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, leftEncoder, pidOutputLeft);
 		
 		pidOutputHinge = new PIDOutputMotor();
-		hingeController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, hingeEncoder, pidOutputHinge);
+		hingeController = new PIDController(ConstantsMap.pShooter, ConstantsMap.iShooter, ConstantsMap.dShooter, ConstantsMap.fShooter, pot, pidOutputHinge);
 		
 		//Set Ouput Range for pid outputs
 		rightController.setOutputRange(-1, 1);
@@ -233,6 +232,7 @@ public class ShooterSubsystem extends Subsystem {
 	public boolean leftPIDOnTarget(){
 		return leftController.onTarget();
 	}
+	
 	
 	public void stop(){
 		intakeLeft.set(0);

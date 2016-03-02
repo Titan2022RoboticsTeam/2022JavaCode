@@ -7,6 +7,8 @@ public class RobotMap {
 	// ports for drive base
 	public static int leftDrivePort = 0;
 	public static int rightDrivePort = 0;
+	public static int gyroPort = 0;
+
 	
 	// encoder ports for drive base
 	public static int leftEncoderA = 0;

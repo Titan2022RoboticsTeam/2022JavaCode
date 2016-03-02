@@ -4,12 +4,13 @@ import org.usfirst.frc.team2022.robot.ConstantsMap;
 import org.usfirst.frc.team2022.robot.RobotMap;
 import org.usfirst.frc.team2022.robot.subsystems.PID.PIDOutputMotor;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 /**
  *
@@ -33,6 +34,9 @@ public class DriveSubsystem extends Subsystem {
 	
 	public PIDController leftController;
 	public PIDOutputMotor pidOutputLeft;
+	
+	//Gyro Sensor
+	public Gyro gyro;
 	
 	// Constructor initializes these variables.
 	public DriveSubsystem() {
@@ -65,6 +69,19 @@ public class DriveSubsystem extends Subsystem {
 		
 		rightController.setAbsoluteTolerance(0.1);
 		leftController.setAbsoluteTolerance(0.1);
+		
+		//Instantiate gyro
+		gyro = new AnalogGyro(RobotMap.gyroPort);
+		gyro.reset();
+	}
+	
+	//Gyro methods
+	public void resetGyro(){
+		gyro.reset();
+	}
+	
+	public double getGyroAngle(){
+		return gyro.getAngle();
 	}
 	
 	// Setter methods for each side.
